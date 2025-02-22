@@ -55,6 +55,18 @@ GET /:platform/:model?
 GET /anthropic?message=What is the capital of France?
 ```
 
+### Root Endpoint
+
+```
+GET /
+```
+
+Returns API information including:
+
+- Supported platforms
+- Available endpoints
+- Basic usage instructions
+
 ### Health Check
 
 ```

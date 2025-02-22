@@ -27,6 +27,23 @@ app.use(
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({
+    name: "LLM API Template",
+    description: "A unified API interface for multiple LLM providers",
+    supported_platforms: Object.keys(DEFAULT_MODELS),
+    endpoints: {
+      "/:platform/:model": "Main LLM interaction endpoint",
+      "/health": "Health check endpoint"
+    },
+    documentation: "See README.md for detailed usage instructions"
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 app.get("/:platform/:model?", async (req, res) => {
   if (!req.query.message) {
     return res.status(400).json({ error: "Message is required" });
@@ -132,10 +149,6 @@ app.get("/:platform/:model?", async (req, res) => {
     default:
       res.status(400).json({ error: "Invalid platform" });
   }
-});
-
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
 });
 
 const PORT = process.env.PORT || 3000;
